@@ -23,7 +23,11 @@ class Login extends React.Component {
         e.preventDefault();
         axiosWithAuth()
             .post("/login", this.state.credentials)
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res)
+                localStorage.setItem("token", res.data.payload);
+                this.props.history.push("/protected");
+            })
             .catch(err => console.log(err));
 
     };
@@ -46,7 +50,7 @@ class Login extends React.Component {
                         value={this.state.credentials.password}
                         onChange={this.handleChange}
                     />
-                    <button>Submit</button>
+                    <button>Login</button>
                 </form>
             </div>
         );
